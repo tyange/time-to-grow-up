@@ -1,4 +1,6 @@
 "use client";
+
+import { useEffect } from "react";
 import { useAtom, useAtomValue } from "jotai";
 import { AnimatePresence, motion } from "motion/react";
 import {
@@ -11,6 +13,19 @@ export default function FirstSection() {
     currentFirstSectionTextIndexAtom
   );
   const data = useAtomValue(firstSectionDataAtom);
+
+  useEffect(() => {
+    if (!data?.content_data?.texts?.length) return;
+
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => {
+        const nextIndex = prev + 1;
+        return nextIndex >= data.content_data.texts.length ? 0 : nextIndex;
+      });
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [data, setCurrentIndex]);
 
   return (
     <div className="relative h-96 flex flex-col justify-center items-center text-center">
@@ -50,7 +65,7 @@ export default function FirstSection() {
                 },
               }}
             >
-              {data}
+              {data.content_data.texts[currentIndex]}
             </motion.h1>
           </motion.div>
         </AnimatePresence>

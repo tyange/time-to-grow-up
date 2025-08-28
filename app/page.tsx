@@ -1,11 +1,23 @@
-import FirstSection from "./components/first-section";
+import { Suspense } from "react";
+
+import dynamic from "next/dynamic";
+
+const FirstSection = dynamic(() => import("./components/first-section"), {
+  loading: () => (
+    <div className="relative h-96 flex justify-center items-center">
+      Loading...
+    </div>
+  ),
+});
 
 export default function Home() {
   return (
     <div>
       <p>this is init</p>
       <p>이제 새로운 time-to-grow-up</p>
-      <FirstSection />
+      <Suspense fallback={<div>Loading...</div>}>
+        <FirstSection />
+      </Suspense>
     </div>
   );
 }
