@@ -1,31 +1,32 @@
-"use client";
+'use client'
 
-import { useEffect } from "react";
-import { useAtom, useAtomValue } from "jotai";
-import { AnimatePresence, motion } from "motion/react";
+import { useAtom, useAtomValue } from 'jotai'
+import { AnimatePresence, motion } from 'motion/react'
+import { useEffect } from 'react'
 import {
   currentFirstSectionTextIndexAtom,
   firstSectionDataAtom,
-} from "../atoms/first-section";
+} from '../atoms/first-section'
 
 export default function FirstSection() {
   const [currentIndex, setCurrentIndex] = useAtom(
-    currentFirstSectionTextIndexAtom
-  );
-  const data = useAtomValue(firstSectionDataAtom);
+    currentFirstSectionTextIndexAtom,
+  )
+  const data = useAtomValue(firstSectionDataAtom)
 
   useEffect(() => {
-    if (!data?.content_data?.texts?.length) return;
+    if (!data?.content_data?.texts?.length)
+      return
 
     const interval = setInterval(() => {
       setCurrentIndex((prev) => {
-        const nextIndex = prev + 1;
-        return nextIndex >= data.content_data.texts.length ? 0 : nextIndex;
-      });
-    }, 3000);
+        const nextIndex = prev + 1
+        return nextIndex >= data.content_data.texts.length ? 0 : nextIndex
+      })
+    }, 3000)
 
-    return () => clearInterval(interval);
-  }, [data, setCurrentIndex]);
+    return () => clearInterval(interval)
+  }, [data, setCurrentIndex])
 
   return (
     <div className="relative h-96 flex flex-col justify-center items-center text-center">
@@ -33,23 +34,23 @@ export default function FirstSection() {
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
-            initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+            initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
             animate={{
               opacity: 1,
               y: 0,
-              filter: "blur(0px)",
+              filter: 'blur(0px)',
               transition: {
                 duration: 0.8,
-                ease: "easeOut",
+                ease: 'easeOut',
               },
             }}
             exit={{
               opacity: 0,
               y: -20,
-              filter: "blur(4px)",
+              filter: 'blur(4px)',
               transition: {
                 duration: 0.6,
-                ease: "easeIn",
+                ease: 'easeIn',
               },
             }}
             className="absolute inset-0 flex flex-col justify-center items-center space-y-6"
@@ -71,5 +72,5 @@ export default function FirstSection() {
         </AnimatePresence>
       )}
     </div>
-  );
+  )
 }

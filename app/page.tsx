@@ -1,14 +1,13 @@
-import { Suspense } from "react";
+import dynamic from 'next/dynamic'
+import { Suspense } from 'react'
 
-import dynamic from "next/dynamic";
-
-const FirstSection = dynamic(() => import("./components/first-section"), {
+const FirstSection = dynamic(() => import('./components/first-section'), {
   loading: () => (
     <div className="relative h-96 flex justify-center items-center">
       Loading...
     </div>
   ),
-});
+})
 
 export default function Home() {
   return (
@@ -19,5 +18,5 @@ export default function Home() {
         <FirstSection />
       </Suspense>
     </div>
-  );
+  )
 }
