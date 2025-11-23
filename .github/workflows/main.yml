@@ -2,7 +2,7 @@ name: Deploy Next.js to Lightsail
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
