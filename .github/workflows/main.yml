@@ -1,4 +1,4 @@
-name: Deploy Nuxt to Lightsail
+name: Deploy Next.js to Lightsail
 
 on:
   push:
