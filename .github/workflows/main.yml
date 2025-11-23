@@ -36,13 +36,13 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: ".next,ecosystem.config.js"
+          source: ".next/,public/,package.json,pnpm-lock.yaml,next.config.js,ecosystem.config.js"
           target: "/home/ubuntu/dev/deploy/time-to-grow-up"
           strip_components: 0
           debug: true
           rm: true
 
-      - name: Restart PM2
+      - name: Install production dependencies and restart PM2
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.HOST }}
@@ -50,5 +50,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /home/ubuntu/dev/deploy/time-to-grow-up
+            pnpm install --prod --frozen-lockfile
             pm2 restart time-to-grow-up || pm2 start ecosystem.config.js
             pm2 save
